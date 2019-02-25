@@ -12,7 +12,7 @@ import com.ezgroceries.shoppinglist.internal.shoppinglist.ShoppingListManager;
 import com.ezgroceries.shoppinglist.internal.shoppinglist.ShoppingListRequest;
 import com.ezgroceries.shoppinglist.internal.shoppinglist.ShoppingListResource;
 import com.ezgroceries.shoppinglist.web.ShoppingListController.ShoppingListCocktail;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,6 +29,8 @@ import org.springframework.test.web.servlet.MockMvc;
 @RunWith(SpringRunner.class)
 @WebMvcTest(ShoppingListController.class)
 public class ShoppingListControllerTest {
+
+    Gson gson = new Gson();
 
     @MockBean
     private ShoppingListManager shoppingListManager;
@@ -69,7 +71,7 @@ public class ShoppingListControllerTest {
         dummyShoppingListRequest.setName("Stephanie's birthday");
 
         mockMvc.perform(post("/shopping-lists").contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(asJsonString(dummyShoppingListRequest)))
+                .content(gson.toJson(dummyShoppingListRequest)))
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.shoppingListId").value("eb18bb7c-61f3-4c9f-981c-55b1b8ee8915"))
@@ -87,23 +89,13 @@ public class ShoppingListControllerTest {
 
         mockMvc.perform(post("/shopping-lists/97c8e5bd-5353-426e-b57b-69eb2260ace3/cocktails")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(asJsonString(dummyCocktails)))
+                .content(gson.toJson(dummyCocktails)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$[0].cocktailId").value("23b3d85a-3928-41c0-a533-6538a71e17c4"))
                 .andExpect(jsonPath("$[1].cocktailId").value("d615ec78-fe93-467b-8d26-5d26d8eab073"))
         ;
 
-    }
-
-    protected static String asJsonString(final Object obj) {
-        try {
-            final ObjectMapper mapper = new ObjectMapper();
-            final String jsonContent = mapper.writeValueAsString(obj);
-            return jsonContent;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 
 }
