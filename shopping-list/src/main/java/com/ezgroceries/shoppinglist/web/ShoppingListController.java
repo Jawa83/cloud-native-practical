@@ -4,8 +4,6 @@ import com.ezgroceries.shoppinglist.internal.Resources;
 import com.ezgroceries.shoppinglist.internal.shoppinglist.ShoppingListManager;
 import com.ezgroceries.shoppinglist.internal.shoppinglist.ShoppingListRequest;
 import com.ezgroceries.shoppinglist.internal.shoppinglist.ShoppingListResource;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import lombok.Data;
@@ -29,6 +27,11 @@ public class ShoppingListController {
         this.shoppingListManager = shoppingListManager;
     }
 
+    @GetMapping
+    public Resources<ShoppingListResource> getAllShoppingLists() {
+        return new Resources<>(this.shoppingListManager.getAllShoppingLists());
+    }
+
     @GetMapping(value = "/{shoppingListId}")
     public ShoppingListResource getShoppingList(@PathVariable String shoppingListId) {
         return shoppingListManager.getShoppingList(UUID.fromString(shoppingListId));
@@ -44,8 +47,6 @@ public class ShoppingListController {
     public Resources<ShoppingListCocktail> postCocktailstoShoppingList(@RequestBody List<ShoppingListCocktail> cocktails) {
         return new Resources<>(cocktails);
     }
-
-    // TODO get all shopping lists
 
     @Data
     @NoArgsConstructor
