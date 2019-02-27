@@ -1,5 +1,6 @@
 package com.ezgroceries.shoppinglist.web;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -16,11 +17,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(CocktailController.class)
+@ActiveProfiles("test")
 public class CocktailControllerTest {
 
     @MockBean
@@ -32,7 +35,7 @@ public class CocktailControllerTest {
     @Test
     public void getCocktails() throws Exception {
 
-        given(cocktailManager.getCocktails()).willReturn(
+        given(cocktailManager.getCocktails(any(String.class))).willReturn(
             Arrays.asList(
                 new CocktailResource(
                         UUID.fromString("23b3d85a-3928-41c0-a533-6538a71e17c4"), "Margerita",

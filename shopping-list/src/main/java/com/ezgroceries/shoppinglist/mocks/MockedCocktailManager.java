@@ -5,11 +5,15 @@ import com.ezgroceries.shoppinglist.internal.cocktail.CocktailResource;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
 
+@Component
+@Profile("test")
 public class MockedCocktailManager implements CocktailManager {
 
     @Override
-    public List<CocktailResource> getCocktails() {
+    public List<CocktailResource> getCocktails(String search) {
         return Arrays.asList(
                 new CocktailResource(
                         UUID.fromString("23b3d85a-3928-41c0-a533-6538a71e17c4"), "Margerita",
