@@ -3,6 +3,7 @@ package com.ezgroceries.shoppinglist.internal.shoppinglist;
 import com.ezgroceries.shoppinglist.exceptions.ResourceAlreadyExistsException;
 import com.ezgroceries.shoppinglist.internal.cocktail.CocktailEntity;
 import com.ezgroceries.shoppinglist.internal.cocktail.CocktailRepository;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -51,6 +52,12 @@ public class ShoppingListService {
             throw new RuntimeException("shopping list does not exist");
         }
         return shoppingListOptional.get();
+    }
+
+    public List<ShoppingListEntity> getAllShoppingLists() {
+        List<ShoppingListEntity> shoppingLists = new ArrayList<>();
+        shoppingListRepository.findAll().forEach(shoppingLists::add);
+        return shoppingLists;
     }
 
 }

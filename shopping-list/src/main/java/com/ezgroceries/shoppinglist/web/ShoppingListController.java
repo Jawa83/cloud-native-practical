@@ -1,7 +1,6 @@
 package com.ezgroceries.shoppinglist.web;
 
 import com.ezgroceries.shoppinglist.internal.Resources;
-import com.ezgroceries.shoppinglist.internal.shoppinglist.ShoppingListManager;
 import com.ezgroceries.shoppinglist.internal.shoppinglist.ShoppingListRequest;
 import com.ezgroceries.shoppinglist.internal.shoppinglist.ShoppingListResource;
 import com.ezgroceries.shoppinglist.internal.shoppinglist.ShoppingListService;
@@ -23,18 +22,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/shopping-lists", produces = "application/json")
 public class ShoppingListController {
 
-    private final ShoppingListManager shoppingListManager;
-
     private final ShoppingListService shoppingListService;
 
-    public ShoppingListController(ShoppingListManager shoppingListManager, ShoppingListService shoppingListService) {
-        this.shoppingListManager = shoppingListManager;
+    public ShoppingListController(ShoppingListService shoppingListService) {
         this.shoppingListService = shoppingListService;
     }
 
     @GetMapping
     public Resources<ShoppingListResource> getAllShoppingLists() {
-        return new Resources<>(this.shoppingListManager.getAllShoppingLists());
+        return new Resources<>(this.shoppingListService.getAllShoppingLists().stream()
+                .map(ShoppingListResource::new)
+                .collect(Collectors.toList()));
     }
 
     @GetMapping(value = "/{shoppingListId}")
