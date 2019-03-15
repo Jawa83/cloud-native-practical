@@ -39,7 +39,7 @@ public class ShoppingListController {
 
     @GetMapping(value = "/{shoppingListId}")
     public ShoppingListResource getShoppingList(@PathVariable String shoppingListId) {
-        return shoppingListManager.getShoppingList(UUID.fromString(shoppingListId));
+        return new ShoppingListResource(shoppingListService.getShoppingList(UUID.fromString(shoppingListId)));
     }
 
     @PostMapping

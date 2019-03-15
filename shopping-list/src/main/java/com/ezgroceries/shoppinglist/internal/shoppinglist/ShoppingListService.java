@@ -31,12 +31,7 @@ public class ShoppingListService {
     }
 
     public ShoppingListEntity addCocktailsToShoppingList(UUID shoppingListId, List<String> idDrinks) {
-        Optional<ShoppingListEntity> shoppingListOptional = shoppingListRepository.findById(shoppingListId);
-        if (!shoppingListOptional.isPresent()) {
-            // TODO use custom exception
-            throw new RuntimeException("shopping list does not exist");
-        }
-        ShoppingListEntity shoppingListEntity = shoppingListOptional.get();
+        ShoppingListEntity shoppingListEntity = getShoppingList(shoppingListId);
         for (String idDrink : idDrinks) {
             Optional<CocktailEntity> cocktailEntity = cocktailRepository.findFirstByIdDrink(idDrink);
             if (!cocktailEntity.isPresent()) {
@@ -47,6 +42,15 @@ public class ShoppingListService {
         }
         shoppingListRepository.save(shoppingListEntity);
         return shoppingListRepository.save(shoppingListEntity);
+    }
+
+    public ShoppingListEntity getShoppingList(UUID shoppingListId) {
+        Optional<ShoppingListEntity> shoppingListOptional = shoppingListRepository.findById(shoppingListId);
+        if (!shoppingListOptional.isPresent()) {
+            // TODO use custom exception
+            throw new RuntimeException("shopping list does not exist");
+        }
+        return shoppingListOptional.get();
     }
 
 }
