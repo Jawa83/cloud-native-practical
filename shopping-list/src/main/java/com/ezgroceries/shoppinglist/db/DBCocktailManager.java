@@ -3,10 +3,10 @@ package com.ezgroceries.shoppinglist.db;
 import com.ezgroceries.shoppinglist.db.CocktailDBResponse.DrinkResource;
 import com.ezgroceries.shoppinglist.internal.cocktail.CocktailManager;
 import com.ezgroceries.shoppinglist.internal.cocktail.CocktailResource;
+import com.ezgroceries.shoppinglist.internal.cocktail.CocktailService;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
@@ -18,11 +18,12 @@ public class DBCocktailManager implements CocktailManager {
     @Autowired
     CocktailDBClient cocktailDBClient;
 
+    @Autowired
+    CocktailService cocktailService;
+
     @Override
     public List<CocktailResource> getCocktails(String search) {
-        return cocktailDBClient.searchCocktails(search).getDrinks().stream()
-                .map(this::mapToCocktailResource)
-                .collect(Collectors.toList());
+        return cocktailService.mergeCocktails(cocktailDBClient.searchCocktails(search).getDrinks());
     }
 
     private CocktailResource mapToCocktailResource(DrinkResource drink) {
