@@ -24,11 +24,11 @@ public class ShoppingListResource {
     public ShoppingListResource(ShoppingListEntity entity) {
         this.shoppingListId = entity.getId();
         this.name = entity.getName();
-        // TODO filter out duplicate ingredients
         this.ingredients = entity.getCocktails().stream()
                 .map(CocktailShoppingListEntity::getCocktail)
                 .map(CocktailEntity::getIngredients)
                 .flatMap(Set::stream)
+                .distinct()
                 .collect(Collectors.toList());
     }
 
