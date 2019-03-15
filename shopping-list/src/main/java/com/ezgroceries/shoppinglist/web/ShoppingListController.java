@@ -4,6 +4,7 @@ import com.ezgroceries.shoppinglist.internal.Resources;
 import com.ezgroceries.shoppinglist.internal.shoppinglist.ShoppingListManager;
 import com.ezgroceries.shoppinglist.internal.shoppinglist.ShoppingListRequest;
 import com.ezgroceries.shoppinglist.internal.shoppinglist.ShoppingListResource;
+import com.ezgroceries.shoppinglist.internal.shoppinglist.ShoppingListService;
 import java.util.List;
 import java.util.UUID;
 import lombok.Data;
@@ -23,8 +24,11 @@ public class ShoppingListController {
 
     private final ShoppingListManager shoppingListManager;
 
-    public ShoppingListController(ShoppingListManager shoppingListManager) {
+    private final ShoppingListService shoppingListService;
+
+    public ShoppingListController(ShoppingListManager shoppingListManager, ShoppingListService shoppingListService) {
         this.shoppingListManager = shoppingListManager;
+        this.shoppingListService = shoppingListService;
     }
 
     @GetMapping
@@ -40,7 +44,7 @@ public class ShoppingListController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ShoppingListResource postShoppingList(@RequestBody ShoppingListRequest shoppingList) {
-        return shoppingListManager.createShoppingList(shoppingList.getName());
+        return new ShoppingListResource(shoppingListService.createShoppingList(shoppingList.toEntity()));
     }
 
     @PostMapping(value = "/{shoppingListId}/cocktails")

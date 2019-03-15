@@ -18,4 +18,9 @@ public class ShoppingListResource {
         this.name = name;
     }
 
+    public ShoppingListResource(ShoppingListEntity entity) {
+        this.shoppingListId = entity.getId();
+        this.name = entity.getName();
+    }
+
 }
