@@ -7,6 +7,7 @@ import com.ezgroceries.shoppinglist.internal.shoppinglist.ShoppingListResource;
 import com.ezgroceries.shoppinglist.internal.shoppinglist.ShoppingListService;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -48,7 +49,9 @@ public class ShoppingListController {
     }
 
     @PostMapping(value = "/{shoppingListId}/cocktails")
-    public Resources<ShoppingListCocktail> postCocktailstoShoppingList(@RequestBody List<ShoppingListCocktail> cocktails) {
+    public Resources<ShoppingListCocktail> postCocktailstoShoppingList(@PathVariable String shoppingListId, @RequestBody List<ShoppingListCocktail> cocktails) {
+        List<String> cocktailIds = cocktails.stream().map(ShoppingListCocktail::getCocktailId).collect(Collectors.toList());
+        shoppingListService.addCocktailsToShoppingList(UUID.fromString(shoppingListId), cocktailIds);
         return new Resources<>(cocktails);
     }
 
