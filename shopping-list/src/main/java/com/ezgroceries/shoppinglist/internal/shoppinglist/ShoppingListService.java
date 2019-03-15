@@ -41,7 +41,6 @@ public class ShoppingListService {
             }
             shoppingListEntity.getCocktails().add(new CocktailShoppingListEntity(cocktailEntity.get().getId(), shoppingListId));
         }
-        shoppingListRepository.save(shoppingListEntity);
         return shoppingListRepository.save(shoppingListEntity);
     }
 
