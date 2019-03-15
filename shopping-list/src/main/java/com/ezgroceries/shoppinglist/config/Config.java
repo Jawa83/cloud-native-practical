@@ -1,7 +1,5 @@
 package com.ezgroceries.shoppinglist.config;
 
-import com.ezgroceries.shoppinglist.db.DBCocktailManager;
-import com.ezgroceries.shoppinglist.internal.cocktail.CocktailManager;
 import com.ezgroceries.shoppinglist.internal.shoppinglist.ShoppingListManager;
 import com.ezgroceries.shoppinglist.mocks.MockedShoppingListManager;
 import org.springframework.context.annotation.Bean;

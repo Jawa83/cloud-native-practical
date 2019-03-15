@@ -6,7 +6,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.ezgroceries.shoppinglist.internal.shoppinglist.ShoppingListManager;
 import com.ezgroceries.shoppinglist.internal.shoppinglist.ShoppingListRequest;
 import com.ezgroceries.shoppinglist.web.ShoppingListController.ShoppingListCocktail;
 import com.google.gson.Gson;
@@ -24,7 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @WebMvcTest(ShoppingListController.class)
 public class ShoppingListControllerTest {
 
-    Gson gson = new Gson();
+    private final Gson gson = new Gson();
 
     @Autowired
     private MockMvc mockMvc;

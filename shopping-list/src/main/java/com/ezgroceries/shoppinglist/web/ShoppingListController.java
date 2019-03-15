@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/shopping-lists", produces = "application/json")
 public class ShoppingListController {
 
-    private ShoppingListManager shoppingListManager;
+    private final ShoppingListManager shoppingListManager;
 
     public ShoppingListController(ShoppingListManager shoppingListManager) {
         this.shoppingListManager = shoppingListManager;

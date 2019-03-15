@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/cocktails", produces = "application/json")
 public class CocktailController {
 
-    private CocktailManager cocktailManager;
+    private final CocktailManager cocktailManager;
 
     public CocktailController(CocktailManager cocktailManager) {
         this.cocktailManager = cocktailManager;
