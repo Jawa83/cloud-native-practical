@@ -1,5 +1,6 @@
 package com.ezgroceries.shoppinglist.internal.shoppinglist;
 
+import com.ezgroceries.shoppinglist.exceptions.ResourceAlreadyExistsException;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.stereotype.Service;
@@ -16,8 +17,7 @@ public class ShoppingListService {
     public ShoppingListEntity createShoppingList(ShoppingListEntity entity) {
         Optional<ShoppingListEntity> repoEntity = shoppingListRepository.findFirstByNameIgnoreCase(entity.getName());
         if (repoEntity.isPresent()) {
-            // TODO use proper execption
-            throw new RuntimeException("shopping list '" + entity.getName() + "' already exists");
+            throw new ResourceAlreadyExistsException();
         }
         if (entity.getId() == null) {
             entity.setId(UUID.randomUUID());
